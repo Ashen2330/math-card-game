@@ -4,9 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/styles/styles.css">
 </head>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Inter', 'Segoe UI', sans-serif;
+        background-color: #f4f6f9;
+    }
+    #title{
+        position: relative;
+        font-size: 100px;
+        text-align: center;
+        animation: title 5s infinite;
+        transition: ease-in-out;
+    }
+    .menu-btn{
+        background: white;
+        padding: 1.5rem;
+        border-radius: 1rem;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        font-family: 'Segoe UI', sans-serif;
+        transition: transform 0.2s ease;
+        font-size: large;
+    }
+    .menu-btn:hover{
+        transform: scale(1.02);
+    }
+    #container{
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+        max-width: 600px;
+        margin: 0 auto;
+        margin-top: 5rem;
+    }
+    @keyframes title{
+        0% {transform: scale(1);}
+        25% {transform: scale(1.05);}
+        50% {transform: scale(1)}
+        75% {transform: scale(1.05);}
+        100% {transform: scale(1);}
+        
+    }
+</style>
 <body>
-    <div id="title">Title</div>
+    <div id="title">Duel Master</div>
+    <div id="container">
+        <button class="menu-btn" id="start">Duel</button>
+        <button class="menu-btn" id="room">Versus</button>
+        <button class="menu-btn" id="settings">settings</button>
+    </div>
 </body>
 </html>
