@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room</title>
+</head>
+<body>
+    <button id="back">Back</button>
+    <div id="main">
+        
+        <form action="#" method="POST">
+            <div id="creating-room">Creating room</div>
+            <input type="number" id="creating-room-input">
+            <button id="confirm-creating">Confirm</button>
+        </form>
+        <form action="#" method="POST">
+            <div id="joining-room">Joining room></div>
+            <input type="number" id="joining-room-input">
+            <button id="confirm-joining">Confirm</button>
+        </form>
+        
+    </div>
+</body>
+<script>
+    const backBtn = document.getElementById('back');
+    backBtn.addEventListener("click", SendBack = () => {
+        window.location = "index.html";
+    });
+</script>
+</html>

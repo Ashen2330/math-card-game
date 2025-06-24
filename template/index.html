@@ -57,4 +57,15 @@
         <button class="menu-btn" id="settings">settings</button>
     </div>
 </body>
+<script>
+    const roomBtn = document.getElementById('room');
+    const settingsBtn = document.getElementById('settings');
+    roomBtn.addEventListener("click", SendToRoom = () => {
+        window.location = "room.html";
+    });
+    settingsBtn.addEventListener("click", SendToSettings = () => {
+        window.location = "setting.html";
+    });
+    
+</script>
 </html>
