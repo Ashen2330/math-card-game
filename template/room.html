@@ -1,31 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Math Card Game Room</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 20px;
+    }
+    #room-info {
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      padding: 1rem;
+    }
+    button {
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
-    <button id="back">Back</button>
-    <div id="main">
-        
-        <form action="#" method="POST">
-            <div id="creating-room">Creating room</div>
-            <input type="number" id="creating-room-input">
-            <button id="confirm-creating">Confirm</button>
-        </form>
-        <form action="#" method="POST">
-            <div id="joining-room">Joining room></div>
-            <input type="number" id="joining-room-input">
-            <button id="confirm-joining">Confirm</button>
-        </form>
-        
-    </div>
-</body>
-<script>
-    const backBtn = document.getElementById('back');
-    backBtn.addEventListener("click", SendBack = () => {
-        window.location = "index.html";
+  <h1>Math Card Game - Room Lobby</h1>
+
+  <div>
+    <input id="creating-room-input" placeholder="Enter room code to create">
+    <button id="confirm-creating">Create Room</button>
+  </div>
+
+  <div>
+    <input id="joining-room-input" placeholder="Enter room code to join">
+    <button id="confirm-joining">Join Room</button>
+  </div>
+
+  <div id="room-info">
+    <div id="room-id">Room ID: -</div>
+    <div id="players">Players: -</div>
+    <div id="host-status">You are: -</div>
+    <button id="start-game" style="display: none;">Start Game</button>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    let currentRoomCode = null;
+    let isHost = false;
+
+    const roomIdDisplay = document.getElementById("room-id");
+    const playersDisplay = document.getElementById("players");
+    const hostStatusDisplay = document.getElementById("host-status");
+    const startGameBtn = document.getElementById("start-game");
+
+    function updateRoomInfo(roomCode, players) {
+      currentRoomCode = roomCode;
+
+      roomIdDisplay.textContent = "Room ID: " + roomCode;
+      playersDisplay.textContent = "Players: " + players.join(", ");
+
+      // Check if current user is the host
+      isHost = players[0] === socket.id;
+      hostStatusDisplay.textContent = isHost ? "You are: Host" : "You are: Player";
+
+      // Show start button only if host
+      startGameBtn.style.display = isHost ? "inline-block" : "none";
+    }
+
+    document.getElementById("confirm-creating").addEventListener("click", (e) => {
+      e.preventDefault();
+      const roomCode = document.getElementById("creating-room-input").value.trim();
+      if (roomCode) {
+        socket.emit("createRoom", roomCode);
+      }
     });
-</script>
+
+    document.getElementById("confirm-joining").addEventListener("click", (e) => {
+      e.preventDefault();
+      const roomCode = document.getElementById("joining-room-input").value.trim();
+      console.log("pressed");
+      if (roomCode) {
+        socket.emit("joinRoom", roomCode);
+      }else{
+        alert(data.message || "Theres no such room!");
+      }
+    });
+
+    startGameBtn.addEventListener("click", () => {
+      if (currentRoomCode && isHost) {
+        socket.emit("startGame", currentRoomCode);
+      }
+    });
+
+    socket.on("roomInfo", ({ roomCode, players }) => {
+      updateRoomInfo(roomCode, players);
+    });
+
+    socket.on("gameStarted", (data) => {
+        window.location.href = `/${currentRoomCode}?id=${socket.id}`;
+      });
+      
+  </script>
+</body>
 </html>

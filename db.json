@@ -1,0 +1,17 @@
+{
+  "players": {
+    "socketID1": {},
+    "socketID2": {},
+    "T8814C0VHw7XX_8cAAAF": {}
+  },
+  "rooms": {
+    "ROOM123": {
+      "host": "socketID1",
+      "members": [
+        "socketID1",
+        "socketID2"
+      ],
+      "started": false
+    }
+  }
+}
